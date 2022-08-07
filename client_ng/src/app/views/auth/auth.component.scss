@@ -1,0 +1,45 @@
+.auth-page {
+  padding-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+  .card {
+    padding: 25px 0;
+    max-width: 500px;
+    border: teal dashed 1px;
+    border-radius: 50px;
+  }
+  input {
+    margin-top: 50px;
+    width: 300px;
+    height: 40px;
+    border: 1px teal solid;
+    border-radius: 5px;
+    padding: 0 15px;
+    font-size: 18px;
+  }
+  input:focus {
+    outline: none;
+  }
+  textarea:focus {
+    outline: none;
+  }
+  .card-content{
+    font-size: 24px;
+    text-align: center;
+  }
+  button {
+    display: block;
+    margin: 40px auto 20px;
+    width: 200px;
+    height: 35px;
+    font-size: 18px;
+    background: teal;
+    color: white;
+  }
+  span {
+    font-size: 18px;
+  }
+
+}
