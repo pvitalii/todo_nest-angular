@@ -1,19 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthInterceptor } from 'src/app/core/interceptors/auth.interceptor';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
-export class NavbarComponent {
 
-  constructor(private router: Router) { }
+export class NavbarComponent implements OnInit {
+  authType: string;
+  _isAuth: Observable<boolean>
+
+  constructor(private router: Router, private authService: AuthService) { }
 
   logout() {
-    AuthInterceptor.accessToken = '';
-    this.router.navigate(['auth/login']);
+    this.authService.logout().subscribe(() => this.router.navigate(['auth/login']));
+  }
+  
+  ngOnInit(): void {
+    this._isAuth = this.authService.isAuth()
   }
 }

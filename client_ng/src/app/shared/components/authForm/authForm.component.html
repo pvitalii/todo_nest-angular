@@ -1,0 +1,23 @@
+<div class="container">
+    <h1>{{authType==='login' ? 'Login' : 'Signup'}}</h1>
+    <form class="form-content" [formGroup]="authForm" (ngSubmit)="submit()">
+        <input type="text" placeholder="Username" formControlName="username">
+        <input type="password" placeholder="Password" formControlName="password">
+        <button type="submit">Submit</button>
+        <div *ngIf="authType === 'login'; else registration">
+            <span>
+                Dont you have an account?
+                <a [routerLink]="['/auth/registration']">Sign up</a>
+            </span>
+
+        </div>
+        <ng-template #registration>
+            <div>
+                <span>
+                    Do you already have an account?
+                    <a [routerLink]="['/auth/login']">Log in</a>
+                </span>
+            </div>
+        </ng-template>
+    </form>
+</div>

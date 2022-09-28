@@ -12,13 +12,13 @@ export class ApiService {
     return  throwError(error.error);
   }
 
-  get(path: string, params: HttpParams = new HttpParams()) {
-    return this.http.get(`${environment.api_url}${path}`, {params})
+  get<T>(path: string, withCredentials?: { withCredentials: boolean }) {
+    return this.http.get<T>(`${environment.api_url}${path}`, withCredentials)
       .pipe(catchError(ApiService.formatErrors))
   }
 
-  post(path:string, body: {}) {
-    return this.http.post(`${environment.api_url}${path}`, body)
+  post(path:string, body: {}, withCredentials?: {withCredentials: boolean}) {
+    return this.http.post(`${environment.api_url}${path}`, body, withCredentials)
       .pipe(catchError(ApiService.formatErrors))
   }
 
@@ -29,7 +29,7 @@ export class ApiService {
   }
 
   put(path:string, body: {}) {
-    return this.http.post(`${environment.api_url}${path}`, body)
+    return this.http.put(`${environment.api_url}${path}`, body)
       .pipe(catchError(ApiService.formatErrors))
   }
 }

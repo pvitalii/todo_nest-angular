@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Task } from 'src/app/core/Interfaces/task.interface';
-import { ApiService } from 'src/app/core/services/api.service';
-import { Location } from '@angular/common';
+import { Task } from 'src/app/common/Interfaces/task.interface';
+import { TaskService } from 'src/app/core/services/task.service';
+import { AuthService } from 'src/app/core/services/auth.service';
+import { User } from 'src/app/common/Interfaces/user.interface';
 
 @Component({
   selector: 'app-home',
@@ -11,50 +11,34 @@ import { Location } from '@angular/common';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(
-    private apiService: ApiService,
-    private router: Router,
-    ) {}
+  constructor(private authService: AuthService, private taskService: TaskService) {}
+  user: User;
+  tasks: Task[];
 
-
-    userTasks: Task[] = []
-
-    taskContent = {
-      title: '',
-      content: '',
-      date: ''
-    }
-
-    createTask(taskContent: any) {
-      this.apiService.get('auth/profile').subscribe((res: any) => {
-        const authorId = res.id;
-        this.apiService.post('task/create', {...taskContent, authorId}).subscribe(() => {
-          const tasks = this.apiService.get(`task/${res.id}`);
-          tasks.subscribe((data: any) => this.userTasks = data);
-        })
-      } )
-    }
-
-    deleteTask(taskId: number) {
-      this.apiService.delete(`task/delete/${taskId}`).subscribe(() => this.apiService.get('auth/profile')
-      .subscribe((res:any) => {
-        const tasks = this.apiService.get(`task/${res.id}`)
-        tasks.subscribe((data: any) => this.userTasks = data);
-      }));
-      
-    }
-
-  ngOnInit(): void {
-    this.apiService.get('auth/profile')
-    .subscribe({
-      next: (res: any) => {
-        const tasks = this.apiService.get(`task/${res.id}`)
-        tasks.subscribe((data: any) => this.userTasks = data);
-      },
-      error: () => {
-        this.router.navigate(['auth/login']);
-      }
-    });
+  taskForm = {
+    title: '',
+    content: '',
+    date: ''
   }
 
+  createTask() {
+    this.taskService.createTask({ ...this.taskForm, authorId: this.user.id }).subscribe(() => this.getTasks());
+  }
+
+  getTasks() {
+    this.taskService.getTasks(this.user.id).subscribe((taskArray) => this.tasks = taskArray);
+  }
+
+  deleteTask(taskId: number) {
+    this.taskService.deleteTask(taskId).subscribe(() => this.getTasks())
+  }
+
+  ngOnInit(): void {
+    this.authService.getUser().subscribe({
+      next: (user) => {
+        this.user = user;
+        this.getTasks();
+      },
+    });
+  }
 }

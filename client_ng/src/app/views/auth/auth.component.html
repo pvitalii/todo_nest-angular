@@ -1,15 +1,4 @@
-<div class='auth-page'>
-  <div class='card'>
-    <div class='card-content'>
-      <p>{{authForm.title}}</p>
-      <input type='text' [(ngModel)]='credentials.name' placeholder='Username'>
-      <input type='password' [(ngModel)]='credentials.password' placeholder='Password'>
-      <button (click)='submitForm(authType)'>{{authForm.button}}</button>
-      <span>{{authForm.span}}
-        <a [routerLink]="['/auth/login']" *ngIf="authType == 'registration'">{{authForm.link}}</a>
-        <a [routerLink]="['/auth/registration']" *ngIf="authType == 'login'">{{authForm.link}}</a>
-      </span>
-    </div>
-  </div>
+<div class="auth-page">
+  <app-authForm></app-authForm>
 </div>
 

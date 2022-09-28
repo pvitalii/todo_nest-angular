@@ -1,10 +1,10 @@
 <div class='home-page'>
   <div class='home-content'>
-    <input [(ngModel)]='taskContent.title' type='text' placeholder='Title'>
-    <input style="width: 400px" [(ngModel)]='taskContent.content' placeholder='Description'>
-    <input [(ngModel)]='taskContent.date' type='date'>
-    <button (click)="createTask(taskContent)">Add</button>
-    <div class="tasks" *ngFor="let task of userTasks; index as i">
+    <input [(ngModel)]='taskForm.title' type='text' placeholder='Title'>
+    <input style="width: 400px" [(ngModel)]='taskForm.content' placeholder='Description'>
+    <input [(ngModel)]='taskForm.date' type='date'>
+    <button (click)="createTask()">Add</button>
+    <div class="tasks" *ngFor="let task of tasks; index as i">
       <div style="font-size: 28px;">{{task.title}}</div>
       <div style="font-size: 18px;">{{task.content}}</div>
       <div style="font-size: 20px;">{{task.date}}</div>

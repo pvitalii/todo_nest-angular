@@ -1,3 +1,8 @@
+enum Role {
+  USER
+  ADMIN
+}
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -9,8 +14,9 @@ datasource db {
 
 model User {
   id       Int    @id @default(autoincrement())
-  name     String @unique
+  username String @unique
   password String
+  role     Role   @default(USER)
   tasks    Task[]
 }
 

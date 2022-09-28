@@ -1,0 +1,16 @@
+<div class="admin-page">
+    <div class="admin-container">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+            </tr>
+            <tr *ngFor="let user of users">
+                <th>{{user.id}}</th>
+                <th>{{user.username}}</th>
+                <th><button (click)="deleteUser(user.id)">Delete</button></th>
+            </tr>
+        </table>
+
+    </div>
+</div>
